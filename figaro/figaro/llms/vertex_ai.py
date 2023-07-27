@@ -34,8 +34,8 @@ class VertexAI(BaseLLM):
         else:
             raise ValueError(f'{options["model"]} is not a valid Vertex AI model')
 
-        logging.debug(f'Parameters={parameters}')
-        logging.debug(f'Prompt: {prompt}')
+        logging.debug(f'Parameters={parameters}'.strip())
+        logging.debug(f'Prompt: {prompt}'.strip())
         response = model.predict(prompt, **parameters)
-        logging.debug(f'Prediction: {prompt}')
+        logging.debug(f'Prediction: {prompt}'.strip())
         return response.text

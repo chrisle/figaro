@@ -1,35 +1,23 @@
 import figaro
-import logging
 
 template = """
-{# This is a comment. It does nothing. #}
-
-{# Start the chain by asking it for the capital of "us_state" #}
-You are an AI assistant. Answer the following question:
 What is the capital of {{us_state}}?
-Reply with just the city name:
+Respond with only the city name.
+{% gen vertexai "capital" model="text-bison" %}
 
-{# The next line sends the above template to VertexAI. It will use #}
-{# VertexAI's "text-bison" model, and the answer will be stored in "capital" #}
-{% gen vertexai 'capital' model='text-bison' %}
+What is {{capital}}'s current population?
+Respond as an integer without separators.
+{% gen vertexai "population" model="text-bison" %}
 
-{# The next prompt takes the answer from the previous prompt, "capital", and #}
-{# uses it in the next prompt. #}
-What is the population of {{capital}}?
-Reply with just an integer without separators.
-
-{# Call VertexAI again, and store the answer in "population". #}
-{% gen vertexai 'population' model='text-bison' %}
-
-{# Now ask when was the city built but by continuing the context by saying "it" #}
-What year was the city built? Reply with only the year.
-{% gen vertexai 'built' model='text-bison' %}
+Generate a JSON object with, state, city name, and capital.
+Respond using this schema:
+{ "state": "<state>", "capital": "<capital>", "population": "<population>" }
+{% gen vertexai "result" model="code-bison" %}
 """
 
-# Instanciate the chain.
-chain = figaro(template=template, verbose=True, level=logging.INFO)
+# Create a Figaro chain.
+chain = figaro(template=template, verbose=True)
 
-# Run the chain for California.
-population = chain(us_state="California")
-
-print(f'Final answer: {population}')
+# Execute the chain with "California" as the input.
+result = chain(us_state="California", type=dict)
+print(result)

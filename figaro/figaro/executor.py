@@ -6,41 +6,51 @@ import json
 import logging
 import re
 import typing
+import sys
 
-class Chain:
+class Executor:
 
-    def __init__(self, template, llm=None):
+    def __init__(self, template, verbose=False, level=logging.INFO):
+        if verbose: logging.basicConfig(stream=sys.stdout, level=level)
         self._template = template
 
-    def __call__(self, **kwargs):
+    def __call__(self, type=str, **kwargs):
         """Execute a chain.
 
-        How it works:
-        1) Split up the Jinja2 template by {% gen %}. So we have prompts and
-           calls to the LLM for each "stage".
-        2) Replace {% gen %} with { _call() } which actually does the LLM call.
-        3) Update the Jinja2 environment with responses from the LLM.
-        4) Repeat until there are no more stages and return the last response
-           to the caller of the Figaro function.
+        Args:
+            type: Data type to cast the final LLM response as (default=str)
+            **kwargs: Keywords sent to the template as variables.
 
+        Returns:
+            Final response from the LLM.
         """
+
+        # How it works:
+        # 1) Split up the Jinja2 template by {% gen %}. So we have prompts and
+        #    calls to the LLM for each "stage".
+        # 2) Replace {% gen %} with { _call() } which actually does the LLM call.
+        # 3) Update the Jinja2 environment with responses from the LLM.
+        # 4) Repeat until there are no more stages and return the last response
+        #    to the caller of the Figaro function.
 
         prompt = ''
         prev_stage_vars = ''
 
         # Split template up into stages where we need to call the LLM.
         stages = re.split(r'(\{\% gen .* \%\})', self._template)
-        logging.debug(f'Stages: {stages}')
+        logging.debug(f'Stages: {stages}'.strip())
 
         for stage_template in stages:
 
             # Carry forward the previous stage's variables in the environment.
             stage_template = prev_stage_vars + '\n' + stage_template
+            logging.debug(f'stage_template: {stage_template}'.strip())
 
             # Create the prompt for this stage include the GeneratorExtension
             # with the Jinja2 parser.
             stage_env = Environment(extensions=[GeneratorExtension])
             stage_prompt = stage_env.from_string(stage_template).render(**kwargs)
+            logging.debug(f'stage_prompt: {stage_template}'.strip())
 
             # Call the LLM if this stage uses the _call function.
             if bool(re.search(pattern=r'\{ _call\(.*\) \}', string=stage_prompt)):
@@ -65,7 +75,8 @@ class Chain:
                     prompt = prompt + response
 
                     # Update the output key in the environment for the next stage.
-                    prev_stage_vars = f'{{% set {args["output_key"]} = "{response}" %}}'
+                    logging.debug(f'{args["output_key"]} = "{response}"'.strip())
+                    prev_stage_vars = f'{{% set {args["output_key"]} = \'{response}\' %}}'
 
                     logging.info(response.strip())
             else:
@@ -74,7 +85,11 @@ class Chain:
                 # Append this stage to the prompt.
                 prompt = prompt + stage_prompt
 
-        return response.strip()
+        # Return output cast to type.
+        result = response.strip()
+        if type == typing.Dict or type == dict:
+            return json.loads(result)
+        return result
 
 
 class GeneratorExtension(Extension):

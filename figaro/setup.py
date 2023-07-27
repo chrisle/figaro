@@ -14,6 +14,6 @@ setup(
         'jinja2',
         'pydantic',
         'requests',
-        'zep-python',
+        'pytz',
     ]
 )

@@ -1,4 +1,4 @@
-from figaro.agents.base_agent import BaseAgent
+from figaro_chat.figaro_chat.base_agent import BaseAgent
 from figaro.llms.base_llm import BaseLLM
 from figaro.memory.base_memory import BaseMemory
 from jinja2 import Environment
