@@ -1,4 +1,4 @@
-import figaro
+import figaro_ai
 
 """
 FIGARO EXAMPLE
@@ -138,7 +138,7 @@ def get_capital_and_population(us_state: str):
     """
 
     # Create a Figaro chain.
-    chain = figaro(template=template, verbose=True)
+    chain = figaro_ai(template=template, verbose=True)
 
     # Execute the chain with "California" as the input. The expected
     # result will be a dict.

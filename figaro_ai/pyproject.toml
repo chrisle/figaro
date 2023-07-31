@@ -1,0 +1,19 @@
+[project]
+name = "figaro-ai"
+version = "0.0.1"
+authors = [
+    { name = "Chris Le", email = "christopher.le@accenture.com" }
+]
+description = "Simplified framework for working with multiple LLMs."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "google-cloud-aiplatform",
+    "jinja2",
+    "pydantic",
+    "requests",
+    "pytz",
+]
+
+[project.optional-dependencies]
+chat = ["figaro-ai-chat"]

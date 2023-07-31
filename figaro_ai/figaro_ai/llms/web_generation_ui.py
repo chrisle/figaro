@@ -1,5 +1,5 @@
 import requests
-from figaro.llms.base_llm import BaseLLM
+from figaro_ai.llms.base_llm import BaseLLM
 
 
 class WebGenerationUI(BaseLLM):

@@ -1,15 +1,26 @@
-# Figaro
+# Figaro AI
 
-A simplified framework for working with large language models that's extendable
-with code that easier to understand.
+Figaro is a utility for working with multiple LLMs.
+
+## Why should I use this?
 
 Figaro attempts to solve the following probems:
 
-  * [X] Simplify writing prompts and working with a Gen AI API.
-  * [X] Switching between differnt LLM models.
-  * [X] Combining multiple LLM models to produce the best result.
-  * [ ] (Coming soon) Simplified multi-turn chat bot with memory.
-  * [ ] (Coming soon) Using LLMs as a definable tool.
+* [X] Simplify writing prompts and working with a Gen AI API.
+* [X] Switching between differnt LLM models.
+* [X] Combining multiple LLM models to produce the best result.
+* [ ] (Coming soon) Simplified multi-turn chat bot with memory.
+* [ ] (Coming soon) Using LLMs as a definable tool.
+
+## Features
+
+* Features 1
+
+## Installation
+
+```
+pip install figaro-ai
+```
 
 ------------------------------------------------------------------------------
 

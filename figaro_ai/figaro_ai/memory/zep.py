@@ -1,7 +1,7 @@
 from .base_memory import BaseMemory
 from zep_python import Memory, Message, MemorySearchPayload, ZepClient
 from typing import Union
-from figaro.memory.chat_history_model import ChatHistoryModel
+from figaro_ai.memory.chat_history_model import ChatHistoryModel
 
 class Zep(BaseMemory):
 

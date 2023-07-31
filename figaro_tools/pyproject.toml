@@ -1,0 +1,12 @@
+[project]
+name = "figaro-ai-tools"
+version = "0.0.1"
+authors = [
+    { name = "Chris Le", email = "christopher.le@accenture.com" }
+]
+description = "Simplified framework for working with multiple LLMs."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "figaro-ai",
+]

@@ -1,4 +1,4 @@
-from figaro.llms.base_llm import BaseLLM
+from figaro_ai.llms.base_llm import BaseLLM
 from vertexai.preview.language_models import TextGenerationModel
 from vertexai.preview.language_models import CodeGenerationModel
 import google.auth

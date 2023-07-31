@@ -1,4 +1,4 @@
-from figaro.llms import EXTENSION_MAP
+from figaro_ai.llms import EXTENSION_MAP
 from jinja2 import Environment
 from jinja2 import nodes
 from jinja2.ext import Extension
