@@ -1,11 +1,20 @@
 # Figaro
 
-A simplified framework for working with large language models.
+A simplified framework for working with large language models that's extendable
+with code that easier to understand.
 
 Features:
 
   * [X] Prompt templating powered by Jinja2.
   * [X] Easily switch LLM models anytime. Even within the same prompt chain!
+  * [ ] (Coming soon) Chat bot agent with selectable memory & vector stores.
+  * [ ] (Coming soon) LLM Agent with definable tools.
+
+------------------------------------------------------------------------------
+
+## Examples
+
+### Prompt Chain
 
 ```py
 import figaro
@@ -33,3 +42,5 @@ capital = chain(us_state="California")
 # "The capital is: Sacramento."
 print(f"The capital is: {capital}.")
 ```
+
+------------------------------------------------------------------------------
