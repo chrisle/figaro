@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../langchain"
+		},
+		{
+			"path": "../zep"
+		},
+		{
+			"path": "../acn-doc-chat"
+		},
+		{
+			"path": "../guidance"
+		}
+	],
+	"settings": {}
+}

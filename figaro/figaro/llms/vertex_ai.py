@@ -9,13 +9,15 @@ import logging
 class VertexAI(BaseLLM):
 
     def call(self, prompt: str, **options):
-        # print(f'options={options}')
         credentials, _ = google.auth.default()
         vertexai.init(
             project='acn-agbg-ai',
             location='us-central1',
             credentials=credentials
         )
+
+        if 'model' not in options:
+            options['model'] = 'text-bison'
 
         if bool(re.search(r'text-bison.*', options['model'])):
             model = TextGenerationModel.from_pretrained(options['model'])
@@ -28,7 +30,7 @@ class VertexAI(BaseLLM):
         elif bool(re.search(r'code-bison.*', options['model'])):
             model = CodeGenerationModel.from_pretrained(options['model'])
             parameters = {
-                'temperature': 0.2,
+                'temperature': 0,
                 'max_output_tokens': 1024,
             }
         else:
