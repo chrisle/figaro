@@ -148,5 +148,5 @@ def get_capital_and_population(us_state: str):
     return result
 
 
-capital_and_population = get_capital_and_population(us_state="California")
-print (capital_and_population)
+data = get_capital_and_population(us_state="California")
+print (data) # {'state': 'California', 'capital': 'Sacramento', 'population': 493648}

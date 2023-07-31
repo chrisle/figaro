@@ -20,28 +20,46 @@ Figaro attempts to solve the following probems:
 ```py
 import figaro
 
-template = """
-What is the capital of {{us_state}}?
-Respond with only the city name.
-{% gen vertexai "capital" model="text-bison" %}
+def get_capital_and_population(us_state: str):
+    """Use Vertex AI to get the capital city and population of a US State.
 
-What is {{capital}}'s current population?
-Respond with only a number.
-{% gen vertexai "capital" model="text-bison" %}
+    Args:
+        us_state: A US state to get capital city and population
 
-Generate a JSON object with, state, city name, and capital.
-For example: { "state": <string>, "capital": <string>, "population": <number> }
-{% gen vertexai "capital" model="code-bison" %}
-"""
+    Returns:
+        Dict with state, capital, and population.
+    """
 
-# Create a Figaro chain.
-chain = figaro(template=template, verbose=True)
+    # Define a Figaro prompt template.
+    template = """
+    What is the capital of {{us_state}}?
+    Respond with only the city name.
+    {% gen vertexai "capital" model="text-bison" %}
 
-# Execute the chain with "California" as the input.
-capital = chain(us_state="California")
+    What is {{capital}}'s current population?
+    Respond as an integer without separators.
+    {% gen vertexai "population" model="text-bison" %}
 
-# "The capital is: Sacramento."
-print(f"The capital is: {capital}.")
+    Generate a JSON object with, state, city name, and capital.
+    Respond using this schema:
+    { "state": "<state>", "capital": "<capital>", "population": "<population>" }
+    {% gen vertexai "result" model="code-bison" %}
+    """
+
+    # Create a Figaro chain.
+    chain = figaro(template=template, verbose=True)
+
+    # Execute the chain with "California" as the input. The expected
+    # result will be a dict.
+    result = chain(us_state=us_state, type=dict)
+
+    # Return the result.
+    return result
+
+
+data = get_capital_and_population(us_state="California")
+print (data) # {'state': 'California', 'capital': 'Sacramento', 'population': 493648}
+
 ```
 
 ------------------------------------------------------------------------------
