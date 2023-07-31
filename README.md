@@ -3,12 +3,13 @@
 A simplified framework for working with large language models that's extendable
 with code that easier to understand.
 
-Features:
+Figaro attempts to solve the following probems:
 
-  * [X] Prompt templating powered by Jinja2.
-  * [X] Easily switch LLM models anytime. Even within the same prompt chain!
-  * [ ] (Coming soon) Chat bot agent with selectable memory & vector stores.
-  * [ ] (Coming soon) LLM Agent with definable tools.
+  * [X] Simplify writing prompts and working with a Gen AI API.
+  * [X] Switching between differnt LLM models.
+  * [X] Combining multiple LLM models to produce the best result.
+  * [ ] (Coming soon) Simplified multi-turn chat bot with memory.
+  * [ ] (Coming soon) Using LLMs as a definable tool.
 
 ------------------------------------------------------------------------------
 
