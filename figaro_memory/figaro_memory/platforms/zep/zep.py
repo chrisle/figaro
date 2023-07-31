@@ -1,4 +1,4 @@
-from .base_memory import BaseMemory
+from .....figaro_ai.figaro_ai.memory.base_memory import BaseMemory
 from zep_python import Memory, Message, MemorySearchPayload, ZepClient
 from typing import Union
 from figaro_ai.memory.chat_history_model import ChatHistoryModel

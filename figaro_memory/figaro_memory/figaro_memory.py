@@ -1,5 +1,5 @@
 from typing import Union
-from .models.message import Message
+from .schemas.message import Message
 
 class FigaroMemory():
 
