@@ -1,32 +1,23 @@
 # Figaro AI
 
-Figaro is a utility for working with multiple LLMs.
+Figaro is a set of tools to make working prompt chains and multiple LLMs
+easier to use. Prompts are created using Jinja templates. Additional features
+such as chat, memory, and tools are separate so you can import only the parts
+you need.
 
-## Why should I use this?
-
-Figaro attempts to solve the following probems:
+Figaro attempts to solve the following problems:
 
 * [X] Simplify writing prompts and working with a Gen AI API.
-* [X] Switching between differnt LLM models.
+* [X] Switch between differnt LLM models.
 * [X] Combining multiple LLM models to produce the best result.
 * [ ] (Coming soon) Simplified multi-turn chat bot with memory.
 * [ ] (Coming soon) Using LLMs as a definable tool.
 
-## Features
-
-* Features 1
-
-## Installation
-
-```
-pip install figaro-ai
-```
+[Read the documentation](docs/README.md)
 
 ------------------------------------------------------------------------------
 
-## Examples
-
-### Prompt Chain
+## Example
 
 ```py
 import figaro
