@@ -1,4 +1,4 @@
-# Figaro AI
+# Figaro
 
 Figaro is a set of tools to make working prompt chains and multiple LLMs
 easier to use. Prompts are created using Jinja templates. Additional features
