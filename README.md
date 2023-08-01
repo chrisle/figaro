@@ -20,7 +20,7 @@ Figaro attempts to solve the following problems:
 ## Example
 
 ```py
-import figaro
+import figaro_ai
 
 def get_capital_and_population(us_state: str):
     """Use Vertex AI to get the capital city and population of a US State.
@@ -49,7 +49,7 @@ def get_capital_and_population(us_state: str):
     """
 
     # Create a Figaro chain.
-    chain = figaro(template=template, verbose=True)
+    chain = figaro_ai(template=template, verbose=True)
 
     # Execute the chain with "California" as the input. The expected
     # result will be a dict.
