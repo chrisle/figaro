@@ -33,7 +33,6 @@ class WebGenerationUI(BaseLLM):
             'mirostat_mode': 0,
             'mirostat_tau': 5,
             'mirostat_eta': 0.1,
-
             'seed': -1,
             'add_bos_token': True,
             'truncation_length': 2048,

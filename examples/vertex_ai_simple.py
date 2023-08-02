@@ -138,7 +138,9 @@ def get_capital_and_population(us_state: str):
     """
 
     # Create a Figaro chain.
-    chain = figaro_ai(template=template, verbose=True)
+    chain = figaro_ai(template=template, verbose=True,
+                      google_project_id='acn-agbg-ai',
+                      google_project_location='us-central1')
 
     # Execute the chain with "California" as the input. The expected
     # result will be a dict.

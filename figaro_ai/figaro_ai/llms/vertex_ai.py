@@ -1,3 +1,4 @@
+from typing import Any
 from figaro_ai.llms.base_llm import BaseLLM
 from vertexai.preview.language_models import TextGenerationModel
 from vertexai.preview.language_models import CodeGenerationModel
@@ -8,11 +9,17 @@ import logging
 
 class VertexAI(BaseLLM):
 
+
+    def __init__(self, **environment_globals: dict[str, Any]):
+        self.project_id = environment_globals['google_project_id']
+        self.location = environment_globals['google_project_location']
+
+
     def call(self, prompt: str, **options):
         credentials, _ = google.auth.default()
         vertexai.init(
-            project='acn-agbg-ai',
-            location='us-central1',
+            project=self.project_id,
+            location=self.location,
             credentials=credentials
         )
 

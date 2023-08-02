@@ -7,12 +7,14 @@ import logging
 import re
 import typing
 import sys
+from typing import Any
 
 class Executor:
 
-    def __init__(self, template, verbose=False, level=logging.INFO):
+    def __init__(self, template, verbose=False, level=logging.INFO, **kwargs):
         if verbose: logging.basicConfig(stream=sys.stdout, level=level)
         self._template = template
+        self._global_args: dict[str, Any] = kwargs
 
     def __call__(self, type=str, **kwargs):
         """Execute a chain.
@@ -49,6 +51,7 @@ class Executor:
             # Create the prompt for this stage include the GeneratorExtension
             # with the Jinja2 parser.
             stage_env = Environment(extensions=[GeneratorExtension])
+            stage_env.globals = self._global_args
             stage_prompt = stage_env.from_string(stage_template).render(**kwargs)
             logging.debug(f'stage_prompt: {stage_template}'.strip())
 
@@ -59,7 +62,7 @@ class Executor:
                 args = json.loads(re.search(r'_call\((.*)\)', stage_prompt)[1])
 
                 # Instanciate the LLM class.
-                llm_klass = EXTENSION_MAP[args['llm']]()
+                llm_klass = EXTENSION_MAP[args['llm']](**stage_env.globals)
 
                 # Repeat multiple calls to the LLM if n > 1 in the arguments.
                 if 'n' in args and args['n'] > 1:
