@@ -1,8 +1,20 @@
-import figaro_chat
+import figaro_ai_chat
 
-chat_session = figaro_chat(
+chat_session: figaro_ai_chat.ChatSession = figaro_ai_chat(
     session_id='1234',
-    history_store=figaro_chat.history_stores.TempDisk,
+    history_store=figaro_ai_chat.history_stores.TempDisk,
 )
 
-chat_session.append()
+chat_session.append(figaro_ai_chat.models.Message(
+    id='1',
+    role_type=figaro_ai_chat.models.Roles.user,
+    content='hello world',
+))
+
+chat_session.append(figaro_ai_chat.models.Message(
+    id='2',
+    role_type=figaro_ai_chat.models.Roles.ai,
+    content='hello human',
+))
+
+print(chat_session.messages)
