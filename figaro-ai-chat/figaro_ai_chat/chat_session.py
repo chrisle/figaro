@@ -1,9 +1,7 @@
 from figaro_ai_chat.history_stores.base import HistoryStoreBase
+from figaro_ai_chat.models import ChatSessionModel
 from figaro_ai_chat.models import Message
 from figaro_ai_chat.models import Roles
-from pydantic import BaseModel
-from typing import List, Optional, Union
-from figaro_ai_chat.models import ChatSessionModel
 from typing import Union
 import uuid
 
@@ -40,10 +38,6 @@ class ChatSession():
             self._history_store = history_store(self._session_id)
             self._session = self._history_store.load_session(self._session_id)
 
-    def append(self, message: Message):
-        self._session.messages.append(message)
-        self._history_store.write_session(chat_session=self._session)
-
     @property
     def ai_display_name(self):
         return self._ai_display_name
@@ -70,6 +64,7 @@ class ChatSession():
 
     def append(self, message: Message):
         self._session.messages.append(message)
+        self._history_store.write_session(chat_session=self._session)
 
     def get_chat(self,
                  last_n: int = None,
