@@ -1,5 +1,6 @@
 from figaro_ai_chat.history_stores.base import HistoryStoreBase
 from figaro_ai_chat.models import Message
+from figaro_ai_chat.models import Roles
 from pydantic import BaseModel
 from typing import List, Optional, Union
 import uuid
@@ -21,7 +22,7 @@ class ChatSession():
                  **kwargs
                  ):
         self._ai_display_name = ai_display_name,
-        self._user_diplay_name = user_display_name
+        self._user_display_name = user_display_name
 
         if history_store is None:
             raise ValueError('history_store cannot be None')
@@ -37,8 +38,6 @@ class ChatSession():
             summary='Chat Session',
             messages=[])
 
-    def append(self, message: Message):
-        self._session.messages.append(message)
 
     @property
     def ai_display_name(self):
@@ -63,3 +62,25 @@ class ChatSession():
     @property
     def messages(self):
         return self._session.messages
+
+    def append(self, message: Message):
+        self._session.messages.append(message)
+
+    def get_chat(self,
+                 last_n: int = None,
+                 before=None,
+                 after=None):
+        messages = self._session.messages
+        if last_n is not None:
+            return self._format_messages(messages[-last_n:])
+        return self._format_messages(messages)
+
+    def _format_messages(self, messages: list[Message]) -> str:
+        output = ''
+        for message in messages:
+            username = self._ai_display_name \
+                if message.role_type == Roles.ai \
+                    else self._user_display_name
+
+            output += f'{message.id} <{username}>: {message.content}\n'
+        return output

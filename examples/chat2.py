@@ -5,16 +5,19 @@ chat_session: figaro_ai_chat.ChatSession = figaro_ai_chat(
     history_store=figaro_ai_chat.history_stores.TempDisk,
 )
 
-chat_session.append(figaro_ai_chat.models.Message(
-    id='1',
-    role_type=figaro_ai_chat.models.Roles.user,
-    content='hello world',
-))
+for n in range(0, 10):
+    if n % 2 == 0:
+        role = figaro_ai_chat.models.Roles.ai
+        message = f'hello human ({n})'
+    else:
+        role = figaro_ai_chat.models.Roles.user
+        message = f'hello computer ({n})'
 
-chat_session.append(figaro_ai_chat.models.Message(
-    id='2',
-    role_type=figaro_ai_chat.models.Roles.ai,
-    content='hello human',
-))
+    message = figaro_ai_chat.models.Message(
+        id=str(n),
+        role_type=role,
+        content=message,
+    )
+    chat_session.append(message)
 
-print(chat_session.messages)
+print(chat_session.get_chat(last_n=5))
