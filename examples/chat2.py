@@ -1,8 +1,9 @@
 import figaro_ai_chat
 
-chat_session: figaro_ai_chat.ChatSession = figaro_ai_chat(
+chat_session = figaro_ai_chat(
     session_id='1234',
     history_store=figaro_ai_chat.history_stores.TempDisk,
+    verbose=True,
 )
 
 chat_session.append(figaro_ai_chat.models.Message(
