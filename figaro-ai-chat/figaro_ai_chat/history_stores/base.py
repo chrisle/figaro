@@ -1,7 +1,7 @@
 from abc import abstractmethod
 from typing import List
 from figaro_ai_chat.models import Message
-
+from figaro_ai_chat.models import ChatSessionModel
 
 class HistoryStoreBase():
 
@@ -12,4 +12,8 @@ class HistoryStoreBase():
 
     @abstractmethod
     def load_session(self, session_id: str) -> List[Message]:
+        raise NotImplementedError()
+
+    @abstractmethod
+    def write_session(self, chat_session: ChatSessionModel):
         raise NotImplementedError()

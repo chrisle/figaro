@@ -1,30 +1,27 @@
 from .base import HistoryStoreBase
-from figaro_ai_chat.models import Message
+from figaro_ai_chat.models import ChatSessionModel
 import json
 import logging
-import os
 import tempfile
-
 
 class TempDisk(HistoryStoreBase):
 
-    def load_session(self):
-        logging.debug('Getting chat session id={self._session_id}')
+    def __init__(self, session_id: str = None):
+        super().__init__(session_id)
+        self._session_filename = f'{tempfile.gettempdir()}/{self._session_id}.json'
+        logging.info(f'Initializing TempDisk history store: {self._session_filename}')
 
-        filename = f'{tempfile.gettempdir()}/{self._session_id}.json'
+    @property
+    def session_filename(self):
+        return self._session_filename
 
-        # Create emptry file if it doesn't exist.
-        if not os.path.exists(filename):
-            f = open(filename, 'w')
-            f.write('[]')
-            f.close()
+    def write_session(self, chat_session: ChatSessionModel):
+        logging.info(f'Writing chat session id={self._session_id}: {self.session_filename}')
+        with open(self.session_filename, 'w') as f:
+            f.write(chat_session.model_dump_json())
 
-        return self._parse_session_file(filename)
-
-    def _parse_session_file(self, session_file: str):
-        output = []
-        with open(session_file, 'r') as f:
-            content = f.read()
-            data = json.loads(content)
-        for message in data:
-            output.append(Message(**message))
+    def load_session(self) -> ChatSessionModel:
+        logging.info(f'Loading chat session id={self._session_id}: {self.session_filename}')
+        with open(self.session_filename, 'r') as f:
+            data = json.loads(f)
+            return ChatSessionModel(**data)
