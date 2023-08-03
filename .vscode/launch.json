@@ -17,7 +17,7 @@
       "name": "Vertex AI Chat",
       "type": "python",
       "request": "launch",
-      "program": "chat2.py",
+      "program": "chat1.py",
       "cwd": "${workspaceFolder}/examples",
       "console": "integratedTerminal",
       "justMyCode": true

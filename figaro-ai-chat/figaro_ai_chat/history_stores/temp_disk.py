@@ -19,12 +19,10 @@ class TempDisk(HistoryStoreBase):
         return self._session_filename
 
     def _write_session(self, chat_session: ChatSessionModel):
-        logging.info(f'Writing chat session id={self._session_id}: {self.session_filename}')
         with open(self.session_filename, 'w') as f:
             f.write(chat_session.model_dump_json())
 
     def _load_session(self) -> ChatSessionModel:
-        logging.info(f'Loading existing chat session id={self._session_id}: {self.session_filename}')
         with open(self.session_filename, 'r', encoding='utf-8') as f:
             content = f.read()
             data = json.loads(content)
@@ -32,5 +30,4 @@ class TempDisk(HistoryStoreBase):
             return session
 
     def _session_exists(self) -> bool:
-        logging.info(f'Checking if chat session exists id={self._session_id}: {self.session_filename}')
         return os.path.exists(self.session_filename)
