@@ -4,6 +4,8 @@ from figaro_ai_chat.models import ChatDisplayMessage
 from figaro_ai_chat.models import ChatBotEnvironment
 from figaro_ai_chat.models import Roles
 from typing import Union
+from figaro_ai.types import HookMap
+
 
 class ChatSession():
 
@@ -25,6 +27,7 @@ class ChatSession():
         self._session_id = session_id
         self._history_store = history_store(self._session_id)
         self._session = self._history_store.load_session()
+
 
     @property
     def session_id(self):
