@@ -10,3 +10,9 @@ requires-python = ">=3.10"
 dependencies = [
     "figaro-ai",
 ]
+
+[project.optional-dependencies]
+chromadb = ["chromadb"]
+all = [
+    "chromadb"
+]

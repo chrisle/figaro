@@ -1,20 +1,27 @@
 from figaro_ai.llms import EXTENSION_MAP
+from figaro_ai.types import HookMap
 from jinja2 import Environment
 from jinja2 import nodes
 from jinja2.ext import Extension
+from typing import Any
 import json
 import logging
 import re
-import typing
 import sys
-from typing import Any
+import typing
 
 class Executor:
 
-    def __init__(self, template, verbose=False, level=logging.INFO, **kwargs):
+    def __init__(self,
+                 template: str,
+                 hooks: HookMap = {},
+                 verbose=False,
+                 level=logging.INFO,
+                 **kwargs):
         if verbose: logging.basicConfig(stream=sys.stdout, level=level)
         self._template = template
         self._global_args: dict[str, Any] = kwargs
+        self._hooks = hooks
 
     def __call__(self, type=str, **kwargs):
         """Execute a chain.
@@ -71,8 +78,21 @@ class Executor:
                     generations = 1
 
                 for n in range(generations):
+
+                    if 'before_response' in self._hooks:
+                        for hook in self._hooks['before_response']:
+                            prompt, args, kwargs = hook(prompt, args, kwargs)
+
                     # Call the LLM.
                     response = llm_klass.call(prompt, **args)
+
+                    # Escape single quotes and double quotes in the response
+                    # so that it can be used in the Jinja2 template.
+                    response = response.replace("'", "\\'").replace('"', '\\"')
+
+                    if 'after_response' in self._hooks:
+                        for hook in self._hooks['after_response']:
+                            response = hook(response)
 
                     # Include previous part of the chain to the next stage.
                     prompt = prompt + response
