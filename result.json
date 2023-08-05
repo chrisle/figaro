@@ -1,0 +1,38 @@
+```json
+{
+  \"name\": \"slide_generator\",
+  \"description\": \"Generates a slide\",
+  \"inputs\": {
+    \"slides\": [
+      {
+        \"title\": \"How Vertex AI can help with ISCP/demand planning\",
+        \"content\": \"<p>Vertex AI can help with ISCP/demand planning by providing a platform for data scientists to build and deploy machine learning models. Vertex AI includes a variety of tools and services that make it easy to build and deploy models, including a data catalog, a notebook environment, and a model registry.</p>\"
+      },
+      {
+        \"title\": \"How Vertex AI can help reduce the number of models that need to be managed\",
+        \"content\": \"<p>Vertex AI can help reduce the number of models that need to be managed by providing a single forecasting model that can be used for all products. This can reduce the cost and complexity of managing multiple models.</p>\"
+      },
+      {
+        \"title\": \"How Vertex AI can help improve forecasting accuracy\",
+        \"content\": \"<p>Vertex AI can help improve forecasting accuracy by using a variety of machine learning techniques, such as time series analysis and ARIMA models.</p>\"
+      },
+      {
+        \"title\": \"How Vertex AI can help accelerate the adoption of ISCP/demand planning\",
+        \"content\": \"<p>Vertex AI can help accelerate the adoption of ISCP/demand planning by providing a platform that is easy to use and that can be integrated with existing systems.</p>\"
+      },
+      {
+        \"title\": \"How Vertex AI can help bring industry perspective and forecasting\",
+        \"content\": \"<p>Vertex AI can help bring industry perspective and forecasting by providing access to a variety of pre-trained models and by working with industry experts to develop custom models.</p>\"
+      },
+      {
+        \"title\": \"How Vertex AI can help Accenture accelerate customized models\",
+        \"content\": \"<p>Vertex AI can help Accenture accelerate customized models by providing a platform that is easy to use and that can be integrated with existing systems.</p>\"
+      },
+      {
+        \"title\": \"Conclusion\",
+        \"content\": \"<p>Vertex AI is a powerful platform that can help businesses improve their ISCP/demand planning capabilities. By using Vertex AI, businesses can reduce the number of models that need to be managed, improve forecasting accuracy, and accelerate the adoption of ISCP/demand planning.</p>\"
+      }
+    ]
+  }
+}
+```

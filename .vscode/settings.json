@@ -3,5 +3,6 @@
   "python.analysis.extraPaths": [
     "./figaro-ai",
     "./figaro-ai-chat",
+    "./figaro-ai-tools",
   ]
 }

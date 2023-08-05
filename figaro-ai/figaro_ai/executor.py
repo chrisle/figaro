@@ -86,6 +86,11 @@ class Executor:
                     # Call the LLM.
                     response = llm_klass.call(prompt, **args)
 
+                    # if 'type' in args:
+                    #     response_type = args['type']
+                    #     if response_type == 'str':
+                    #         response = re.search(r'[^"]*', response).group()
+
                     # Escape single quotes and double quotes in the response
                     # so that it can be used in the Jinja2 template.
                     response = response.replace("'", "\\'").replace('"', '\\"')

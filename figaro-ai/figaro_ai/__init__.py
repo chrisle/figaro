@@ -11,7 +11,7 @@ class Figaro(types.ModuleType):
                  hooks={},
                  verbose=False,
                  level=logging.INFO,
-                 **kwargs):
+                 **kwargs) -> str:
         # When verbose=True, send logs to stdout
         if verbose: logging.basicConfig(stream=sys.stdout, level=level)
         return Executor(
