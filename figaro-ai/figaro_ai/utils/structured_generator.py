@@ -1,15 +1,26 @@
 import json
+import logging
 import re
-import sys
 
 # https://github.com/1rgs/jsonformer/blob/main/jsonformer/main.py
 
 class StructuredGenerator():
+    """Generates structured objects from a JSON schema using the Language Model API."""
 
     def __init__(self,
                  schema: dict,
                  prompt: str,
                  llm):
+        """Initializes the StructuredGenerator.
+
+        Args:
+            schema: A JSON schema that describes the structure of the object to be generated.
+            prompt: A prompt that describes the object to be generated.
+            llm: An instance of the Language Model API.
+
+        Returns:
+            An instance of the StructuredGenerator.
+        """
         self.schema = schema
         self.prompt = prompt
         self.generation_marker = '|GENERATION|'
@@ -98,6 +109,7 @@ class StructuredGenerator():
         return obj
 
     def generate(self):
+        logging.info(f'Generating structured object from schema: {self.schema}')
         self.value = {}
         return self.generate_object(self.schema['properties'], self.value)
 
@@ -115,46 +127,5 @@ class StructuredGenerator():
             schema=json.dumps(self.schema),
             progress=progress,
         )
+        logging.info(progress)
         return prompt
-
-#########################################
-
-from figaro_ai.llms.vertex_ai import VertexAI
-import logging
-
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
-
-llm = VertexAI(
-            google_project_id='acn-agbg-ai',
-            google_project_location='us-central1')
-
-json_schema = {
-    "type": "object",
-    "properties": {
-        "full_name": { "type": "string" },
-        "age": { "type": "integer" },
-        "rank": { "type": "float" },
-        "is_student": { "type": "boolean" },
-        "description": {
-            "type": "object",
-            "properties": {
-                "hair_color": {"type": "string"},
-                "shirt_color": {"type": "string"},
-            }
-        },
-        "favorite_foods": {
-            "type": "array",
-            "count": 5,
-            "items": { "type": "string" }
-        },
-        "favorite_subject": {"type": "string"},
-    }
-}
-
-generator = StructuredGenerator(
-    llm=llm,
-    schema=json_schema,
-    prompt="Generate a person based on the following schema:"
-)
-result = generator.generate()
-print(result)
